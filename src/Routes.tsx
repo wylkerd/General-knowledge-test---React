@@ -14,7 +14,7 @@ const Routes = () => {
        <BrowserRouter>
         <Switch>
             <Route path="/" element={<InitialPage/>} />
-            <Route path="/confirmation" element={<ConfirmationPage/>} />
+            <Route path="/confirmation/:amount" element={<ConfirmationPage/>} />
         </Switch>
        </BrowserRouter>
    )

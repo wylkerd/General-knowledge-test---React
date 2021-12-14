@@ -1,18 +1,19 @@
 import React from 'react';
-import { Button, Container, Divider, Typography } from '@mui/material'
-import CounterComponent from '../Components/CounterComponent';
+import { Button, Container, Typography } from '@mui/material'
+import { Link } from'react-router-dom';
+import HeaderComponent from '../Components/HeaderComponent';
 
 export default function InitialPage() {
 
     return (
         <>
             <Container>
-                <Typography variant="h2" textAlign="center">Teste seu conhecimento</Typography>
-                <Divider />
-                <br/><br/>
-                <Typography variant="h6" textAlign="center">Selecione a quantidade de perguntas...</Typography>
-                <div style={{'textAlign': 'center', 'marginTop': '2rem'}}><CounterComponent/></div>
-                <div style={{'textAlign': 'center', 'marginTop': '1.5rem'}}><Button variant='contained'>Avançar</Button></div>
+                <HeaderComponent/>
+                <Typography variant="h6" textAlign="center">Deseja inicar o teste?</Typography>
+                <Container style={{'alignContent':'center', 'textAlign':'center', 'marginTop': '1.5rem'}}>
+                    <Button variant="contained" color="success" style={{'marginRight':"0.5rem"}}>Start</Button>
+                    <Link to="/" style={{ textDecoration: 'none' }}><Button variant="outlined" color="warning">Cancel</Button></Link>
+                </Container>
             </Container>
         </>
     );
