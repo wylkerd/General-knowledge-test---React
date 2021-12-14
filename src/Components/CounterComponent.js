@@ -21,9 +21,9 @@ function CounterComponent()  {
     return (
         <Container style={{'alignContent':'center'}}>
             <ButtonGroup size="small" aria-label="small outlined button group">
-                <Button onClick={handleIncrement}>+</Button>
+                {counter !== 0 ? displayCounter && <Button onClick={handleDecrement}>-</Button> : <Button disabled>-</Button>}
                 {displayCounter && <Button disabled>{counter}</Button>}
-                {counter != 0 ? displayCounter && <Button onClick={handleDecrement}>-</Button> : <Button disabled>-</Button>}
+                <Button onClick={handleIncrement}>+</Button>
             </ButtonGroup>
         </Container>
     );
