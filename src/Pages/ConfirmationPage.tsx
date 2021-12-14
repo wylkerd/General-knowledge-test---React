@@ -2,10 +2,8 @@ import React from 'react';
 import { Button, Container, Divider, Typography } from '@mui/material'
 import CounterComponent from '../Components/CounterComponent';
 
-export function InitialPage() {
-    const [amount, setAmount] = window.sessionStorage.getItem('amount') ? JSON.parse(window.sessionStorage.getItem('amount')) : 0;
+export default function InitialPage() {
 
-    console.log(amount);
     return (
         <>
             <Container>

@@ -15,7 +15,7 @@ function CounterComponent()  {
     };
 
     useEffect(() => {
-        window.sessionStorage.setItem('counter', counter);
+        window.sessionStorage.setItem('counter', String(counter));
     },[counter]);
   
     return (

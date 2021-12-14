@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { InitialPage } from './Pages/InitialPage';
+import Routes from './Routes';
 
 function App() {
   return (
-    <InitialPage/>
+    <Routes/>
   )
 }
 

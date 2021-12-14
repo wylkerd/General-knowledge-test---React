@@ -3,7 +3,7 @@ import { Button, Container, Divider, Typography } from '@mui/material'
 import CounterComponent from '../Components/CounterComponent';
 import { FcIdea } from "react-icons/fc";
 
-export function InitialPage() {
+export default function InitialPage() {
     return (
         <>
             <Container>
