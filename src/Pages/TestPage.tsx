@@ -10,9 +10,11 @@ export default function TestPage() {
     const [loaded, setLoaded] = useState(false);
 
     const buscar = (counter: number) => {
+        if (!loaded)
         Data.getAllQuestions<IQuestions>(counter).then(values => {
             let total = values.total != null ? values.total : 0;
             setTestQuestions(values.data);
+            setLoaded(true);
             return values;
         });
     }
