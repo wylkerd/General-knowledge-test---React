@@ -9,7 +9,7 @@ export default function TestPage() {
     const counter = useState(window.location.pathname.split('/')[2]);
     const [testQuestions, setTestQuestions] = useState<IQuestions>({ response_code: 0, results: [] });
     const [loaded, setLoaded] = useState(false);
-    const [selected, setSelected] = useState({checked: 0});
+    const [selected, setSelected] = useState({checked: 0, index: 0});
 
     const buscar = (counter: number) => {
         if (!loaded)
@@ -50,8 +50,10 @@ export default function TestPage() {
         return array;
     }
     
-    const handleToggle = (value: any) => () => {
-        setSelected({ checked: value });
+    const handleToggle = (value: any, index: number) => () => {
+        setSelected({ checked: value, index: index });
+        testQuestions.results[index].selected = value;
+        console.log(testQuestions.results[index]);
       };
 
     const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
@@ -65,37 +67,17 @@ export default function TestPage() {
                     {question.question}
                     </Typography>
                     <List>
-                        {/* {[0, 1, 2, 3].map(value => (
-                            <ListItem
-                            key={value}
-                            role={undefined}
-                            button
-                            onClick={handleToggle(value)}
-                            className=""
-                            >
-                            <FormControlLabel
-                                    control={<Radio />}
-                                    checked={selected.checked === value}
-                                    tabIndex={-1} 
-                                    label={""}                        
-                                />
-                            <ListItemText
-                                // primary={alts.alternatives[value]}
-                                primary={all_answers[value]}
-                            />
-                            </ListItem>
-                        ))} */}
                         {question.all_answers.map((value, i) => (
                             <ListItem
                             key={i}
                             role={undefined}
                             button
-                            onClick={handleToggle(i)}
+                            onClick={handleToggle(i, index)}
                             className=""
                             >
                             <FormControlLabel
                                     control={<Radio />}
-                                    checked={selected.checked === i}
+                                    checked={selected.checked === i && selected.index === index}
                                     tabIndex={-1} 
                                     label={""}                        
                                 />

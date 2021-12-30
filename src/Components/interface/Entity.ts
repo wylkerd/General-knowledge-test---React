@@ -16,6 +16,7 @@ export interface IResult {
     correct_answer: string;
     incorrect_answers: string[];
     all_answers: string[];
+    selected: number;
 }
 
 export interface IAllAlternatives {
