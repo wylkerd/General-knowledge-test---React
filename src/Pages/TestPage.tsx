@@ -27,16 +27,9 @@ export default function TestPage() {
         buscar(amount);
     },[counter])
 
-    // useEffect(() => {
-    //     let all = [];
-    //     for (let index = 0; index < testQuestions.results.length; index++) {
-    //         for (let i = 0; i < testQuestions.results[index].incorrect_answers.length; i++) {
-    //             all.push(testQuestions.results[index].incorrect_answers[i]);
-    //         }
-    //         console.log(all);
-    //     }
+    useEffect(() => {
         
-    // }, [testQuestions])
+    }, [testQuestions])
 
     // Função para randomizar array
     function shuffleArray(array: any) {
@@ -62,20 +55,17 @@ export default function TestPage() {
       };
 
     const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
-        // let alts: IAllAlternatives = { alternatives: [] };
-        // alts.alternatives = question.incorrect_answers;
-        // alts.alternatives.push(question.correct_answer);
-        // alts = shuffleArray(alts);
 
         let all_answers = question.incorrect_answers.concat(question.correct_answer) ;
         all_answers = shuffleArray(all_answers);
+        question.all_answers = all_answers;
         return (
             <div className="">
                     <Typography component="h1" variant="h4">
                     {question.question}
                     </Typography>
                     <List>
-                        {[0, 1, 2, 3].map(value => (
+                        {/* {[0, 1, 2, 3].map(value => (
                             <ListItem
                             key={value}
                             role={undefined}
@@ -92,6 +82,26 @@ export default function TestPage() {
                             <ListItemText
                                 // primary={alts.alternatives[value]}
                                 primary={all_answers[value]}
+                            />
+                            </ListItem>
+                        ))} */}
+                        {question.all_answers.map((value, i) => (
+                            <ListItem
+                            key={i}
+                            role={undefined}
+                            button
+                            onClick={handleToggle(i)}
+                            className=""
+                            >
+                            <FormControlLabel
+                                    control={<Radio />}
+                                    checked={selected.checked === i}
+                                    tabIndex={-1} 
+                                    label={""}                        
+                                />
+                            <ListItemText
+                                // primary={alts.alternatives[value]}
+                                primary={value}
                             />
                             </ListItem>
                         ))}
