@@ -48,52 +48,40 @@ export default function TestPage() {
         setSelected({ checked: value });
       };
 
-    // const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
-    //     return (
-    //         <tr key={index}>
-    //             <td className="">{question.category}</td>
-    //             <td className="">{question.difficulty}</td>
-    //             <td className="">{question.type}</td>
-    //             <td className="">{question.question}</td>
-    //             <td className="">{question.correct_answer}</td>
-    //             <td className="">{question.incorrect_answers}</td>
-    //         </tr>
-    //     )
-    // }) : [];
-
     const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
         let alts: IAllAlternatives = { alternatives: [] };
         alts.alternatives = question.incorrect_answers;
         alts.alternatives.push(question.correct_answer);
         alts = shuffleArray(alts);
+
+        question.all_answers = alts ;
+        console.log(question.all_answers);
         return (
             <div className="">
                     <Typography component="h1" variant="h4">
                     {question.question}
                     </Typography>
-                    <form className="" noValidate>
-                        <List>
-                            {[0, 1, 2, 3].map(value => (
-                                <ListItem
-                                key={value}
-                                role={undefined}
-                                button
-                                onClick={handleToggle(value)}
-                                className=""
-                                >
-                                <FormControlLabel
-                                        control={<Radio />}
-                                        checked={selected.checked === value}
-                                        tabIndex={-1} 
-                                        label={""}                        
-                                    />
-                                <ListItemText
-                                    primary={alts.alternatives[value]}
+                    <List>
+                        {[0, 1, 2, 3].map(value => (
+                            <ListItem
+                            key={value}
+                            role={undefined}
+                            button
+                            onClick={handleToggle(value)}
+                            className=""
+                            >
+                            <FormControlLabel
+                                    control={<Radio />}
+                                    checked={selected.checked === value}
+                                    tabIndex={-1} 
+                                    label={""}                        
                                 />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </form>
+                            <ListItemText
+                                primary={alts.alternatives[value]}
+                            />
+                            </ListItem>
+                        ))}
+                    </List>
                 </div>
         )
     }) : [];
