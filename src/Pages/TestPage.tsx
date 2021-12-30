@@ -27,21 +27,34 @@ export default function TestPage() {
         buscar(amount);
     },[counter])
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     let all = [];
+    //     for (let index = 0; index < testQuestions.results.length; index++) {
+    //         for (let i = 0; i < testQuestions.results[index].incorrect_answers.length; i++) {
+    //             all.push(testQuestions.results[index].incorrect_answers[i]);
+    //         }
+    //         console.log(all);
+    //     }
         
-    }, [testQuestions])
+    // }, [testQuestions])
 
     // Função para randomizar array
-    function shuffleArray(arr: any) {
-        // Loop em todos os elementos
-        for (let i = arr.length - 1; i > 0; i--) {
-                // Escolhendo elemento aleatório
-            const j = Math.floor(Math.random() * (i + 1));
-            // Reposicionando elemento
-            [arr[i], arr[j]] = [arr[j], arr[i]];
+    function shuffleArray(array: any) {
+        let currentIndex = array.length,  randomIndex;
+
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
         }
-        // Retornando array com aleatoriedade
-        return arr;
+
+        return array;
     }
     
     const handleToggle = (value: any) => () => {
@@ -49,13 +62,13 @@ export default function TestPage() {
       };
 
     const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
-        let alts: IAllAlternatives = { alternatives: [] };
-        alts.alternatives = question.incorrect_answers;
-        alts.alternatives.push(question.correct_answer);
-        alts = shuffleArray(alts);
+        // let alts: IAllAlternatives = { alternatives: [] };
+        // alts.alternatives = question.incorrect_answers;
+        // alts.alternatives.push(question.correct_answer);
+        // alts = shuffleArray(alts);
 
-        question.all_answers = alts ;
-        console.log(question.all_answers);
+        let all_answers = question.incorrect_answers.concat(question.correct_answer) ;
+        all_answers = shuffleArray(all_answers);
         return (
             <div className="">
                     <Typography component="h1" variant="h4">
@@ -77,7 +90,8 @@ export default function TestPage() {
                                     label={""}                        
                                 />
                             <ListItemText
-                                primary={alts.alternatives[value]}
+                                // primary={alts.alternatives[value]}
+                                primary={all_answers[value]}
                             />
                             </ListItem>
                         ))}
