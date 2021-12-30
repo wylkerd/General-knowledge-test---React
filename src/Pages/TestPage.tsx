@@ -21,6 +21,11 @@ export default function TestPage() {
         });
     }
 
+    const handleSubmit = (event: any) => () => {
+        alert('A resposta foi enviada com sucesso!');
+        event.preventDefault();
+    }
+
     useEffect(() => {
         let amount = parseInt(counter[0]);
         setLoaded(true);
@@ -63,6 +68,7 @@ export default function TestPage() {
         question.all_answers = all_answers;
         return (
             <div className="">
+                {/* <form onSubmit={() => handleSubmit}> */}
                     <Typography component="h1" variant="h4">
                     {question.question}
                     </Typography>
@@ -88,6 +94,8 @@ export default function TestPage() {
                             </ListItem>
                         ))}
                     </List>
+                    {/* <input type="submit" value="Enviar"/> */}
+                {/* </form> */}
                 </div>
         )
     }) : [];
@@ -97,7 +105,13 @@ export default function TestPage() {
             <HeaderComponent/>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                {questions.length <= 0 ? <div>Nenhum dado encontrado</div> : questions}
+                {questions.length <= 0 ? <div>Nenhum dado encontrado</div> : 
+                // <form onSubmit={() => handleSubmit} >
+                <form>
+                    {questions}
+                    <input type="submit" value="Enviar" onClick={() => alert('Enviado com sucesso!')}/>
+                </form>
+                }
             </Container>
         </>
     );
