@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import HeaderComponent from "../Components/HeaderComponent";
-import { IQuestions } from "../Components/interface/Entity";
+import { IAllAlternatives, IQuestions } from "../Components/interface/Entity";
 import * as Data from '../Data/Data';
 import { Container, CssBaseline, FormControlLabel, List, ListItem, ListItemText, Radio, Typography } from "@mui/material";
 
@@ -30,73 +30,80 @@ export default function TestPage() {
     useEffect(() => {
         
     }, [testQuestions])
+
+    // Função para randomizar array
+    function shuffleArray(arr: any) {
+        // Loop em todos os elementos
+        for (let i = arr.length - 1; i > 0; i--) {
+                // Escolhendo elemento aleatório
+            const j = Math.floor(Math.random() * (i + 1));
+            // Reposicionando elemento
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        // Retornando array com aleatoriedade
+        return arr;
+    }
     
     const handleToggle = (value: any) => () => {
         setSelected({ checked: value });
       };
 
+    // const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
+    //     return (
+    //         <tr key={index}>
+    //             <td className="">{question.category}</td>
+    //             <td className="">{question.difficulty}</td>
+    //             <td className="">{question.type}</td>
+    //             <td className="">{question.question}</td>
+    //             <td className="">{question.correct_answer}</td>
+    //             <td className="">{question.incorrect_answers}</td>
+    //         </tr>
+    //     )
+    // }) : [];
+
     const questions = testQuestions?.results.length > 0 ? testQuestions?.results.map((question, index) => {
+        let alts: IAllAlternatives = { alternatives: [] };
+        alts.alternatives = question.incorrect_answers;
+        alts.alternatives.push(question.correct_answer);
+        alts = shuffleArray(alts);
         return (
-            <tr key={index}>
-                <td className="">{question.category}</td>
-                <td className="">{question.difficulty}</td>
-                <td className="">{question.type}</td>
-                <td className="">{question.question}</td>
-                <td className="">{question.correct_answer}</td>
-                <td className="">{question.incorrect_answers}</td>
-            </tr>
+            <div className="">
+                    <Typography component="h1" variant="h4">
+                    {question.question}
+                    </Typography>
+                    <form className="" noValidate>
+                        <List>
+                            {[0, 1, 2, 3].map(value => (
+                                <ListItem
+                                key={value}
+                                role={undefined}
+                                button
+                                onClick={handleToggle(value)}
+                                className=""
+                                >
+                                <FormControlLabel
+                                        control={<Radio />}
+                                        checked={selected.checked === value}
+                                        tabIndex={-1} 
+                                        label={""}                        
+                                    />
+                                <ListItemText
+                                    primary={alts.alternatives[value]}
+                                />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </form>
+                </div>
         )
     }) : [];
 
     return (
         <>
             <HeaderComponent/>
-            {/* <table id="test">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Difficulty</th>
-                        <th>Type</th>
-                        <th>Question</th>
-                        <th>Correct Answer</th>
-                        <th>Incorrect Answers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {questions.length <= 0 ? <tr><td>Nenhum dado encontrado</td></tr> : questions}
-                </tbody>
-            </table> */}
-
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                <div className="">
-                    <Typography component="h1" variant="h4">
-                    Qual foi o seu primeiro bixo de estimação?
-                    </Typography>
-                    <form className="" noValidate>
-                    <List>
-                        {[0, 1, 2, 3, 4].map(value => (
-                            <ListItem
-                            key={value}
-                            role={undefined}
-                            button
-                            onClick={handleToggle(value)}
-                            className=""
-                            >
-                            <FormControlLabel
-                                    control={<Radio />}
-                                    checked={selected.checked === value}
-                                    tabIndex={-1} 
-                                    label={""}                        
-                                />
-                            <ListItemText
-                                primary={`This a a multiline answers, please work please please`}
-                            />
-                            </ListItem>
-                        ))}
-                        </List>
-                    </form>
-                </div>
+                {questions.length <= 0 ? <div>Nenhum dado encontrado</div> : questions}
             </Container>
         </>
     );

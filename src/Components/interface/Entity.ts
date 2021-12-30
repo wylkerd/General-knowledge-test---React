@@ -15,4 +15,9 @@ export interface IResult {
     question: string;
     correct_answer: string;
     incorrect_answers: string[];
+    all_answers?: IAllAlternatives[];
+}
+
+export interface IAllAlternatives {
+    alternatives: string[];
 }
